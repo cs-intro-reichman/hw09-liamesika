@@ -24,7 +24,9 @@ public class List {
 
     /** Returns the CharData of the first element in this list. */
     public CharData getFirst() {
-        // Your code goes here
+        if (first == null) {
+            return null;
+        }
         return first.cp;
     }
 
@@ -69,15 +71,26 @@ public class List {
 
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
-     *  given chr to the beginning of this list. */
+     *  given chr to the end of this list. */
     public void update(char chr) {
         int index = indexOf(chr);
         if (index != -1) {
             // Character exists, increment its count
             get(index).count++;
         } else {
-            // Character doesn't exist, add new CharData at beginning
-            addFirst(chr);
+            // Character doesn't exist, add new CharData at the end
+            CharData cd = new CharData(chr);
+            Node newNode = new Node(cd);
+            if (first == null) {
+                first = newNode;
+            } else {
+                Node current = first;
+                while (current.next != null) {
+                    current = current.next;
+                }
+                current.next = newNode;
+            }
+            size++;
         }
     }
 
