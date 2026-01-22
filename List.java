@@ -47,6 +47,9 @@ public class List {
         Node current = first;
         while (current != null) {
             str.append(current.cp.toString());
+            if (current.next != null) {
+                str.append(" ");
+            }
             current = current.next;
         }
         str.append(")");
@@ -71,27 +74,20 @@ public class List {
 
     /** If the given character exists in one of the CharData objects in this list,
      *  increments its counter. Otherwise, adds a new CharData object with the
-     *  given chr to the end of this list. */
+     *  given chr to the beginning of this list. */
     public void update(char chr) {
-        int index = indexOf(chr);
-        if (index != -1) {
-            // Character exists, increment its count
-            get(index).count++;
-        } else {
-            // Character doesn't exist, add new CharData at the end
-            CharData cd = new CharData(chr);
-            Node newNode = new Node(cd);
-            if (first == null) {
-                first = newNode;
-            } else {
-                Node current = first;
-                while (current.next != null) {
-                    current = current.next;
-                }
-                current.next = newNode;
+        Node current = first;
+        // Search for the character
+        while (current != null) {
+            if (current.cp.chr == chr) {
+                // Found the character, increment count
+                current.cp.count++;
+                return;
             }
-            size++;
+            current = current.next;
         }
+        // Character doesn't exist, add new CharData at the beginning
+        addFirst(chr);
     }
 
     /** GIVE If the given character exists in one of the CharData objects
