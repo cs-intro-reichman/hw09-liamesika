@@ -118,7 +118,7 @@ public class LanguageModel {
 		// Set the initial window to the last windowLength characters of the initial text
 		String window = initialText.substring(initialText.length() - windowLength);
 		// Generate text until we reach the desired length
-		while (generatedText.length() < textLength) {
+		while (generatedText.length() < initialText.length() + textLength) {
 			// Get the list for the current window
 			List probs = CharDataMap.get(window);
 			// If the window is not found, stop and return the text generated so far
